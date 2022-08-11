@@ -20,7 +20,7 @@ console.log(localStorage);
     TotalQuantity += parsedproduct.productquantity;
 
     document.getElementById('cart__items')
-            affichage += `<article class="cart__item" data-id="${productID}" data-color="{product-color}">
+            affichage += `<article class="cart__item" data-id="${productTitle}" data-color="{product-color}">
             <div class="cart__item__img">
             <img src="${productImage}" alt="Photographie d'un canapé">
             </div>
@@ -36,7 +36,7 @@ console.log(localStorage);
                   <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${productQuantity}">
                 </div>
                 <div class="cart__item__content__settings__delete">
-                  <p id="delete" class="${productTitle}" onclick="removeItems(${index})">Supprimer</p>
+                  <p id="delete" class="${productTitle}" onclick="removeItems(event)">Supprimer</p>
                 </div>
               </div>
             </div>
@@ -56,8 +56,9 @@ function totalQuantity() {
     document.getElementById('totalQuantity').innerHTML = TotalQuantity;
 }
 
-function removeItems(${index}) {
-  console.log(${index}); 
+function removeItems(event) {
+  console.log(event.target.className);
+  let itemToRemove = event.target.className;
+  window.localStorage.removeItem(event.target.className);
+  location.reload();
 }
-
-
