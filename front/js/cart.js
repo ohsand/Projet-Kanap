@@ -33,7 +33,7 @@ console.log(localStorage);
               <div class="cart__item__content__settings">
                 <div class="cart__item__content__settings__quantity">
                   <p>Qté : ${productQuantity}</p>
-                  <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${productQuantity}">
+                  <input type="number" class="${productTitle}" name="itemQuantity" oninput="changeQuantity(event)" min="1" max="100" value="" placeholder="${productQuantity}">
                 </div>
                 <div class="cart__item__content__settings__delete">
                   <p id="delete" class="${productTitle}" onclick="removeItems(event)">Supprimer</p>
@@ -61,4 +61,25 @@ function removeItems(event) {
   let itemToRemove = event.target.className;
   window.localStorage.removeItem(event.target.className);
   location.reload();
+}
+
+function changeQuantity(event) {
+  //var val = document.querySelector('input').value;
+  console.log(event.target.className);
+  let itemToChangeQuantity = event.target.className;
+  //var val = document.getElementById(itemToChangeQuantity.val());
+  var val = document.getElementsByClassName(event.target.className)[0].value;
+  JSON.parse(localStorage.getItem(itemToChangeQuantity));
+  console.log(JSON.parse(localStorage.getItem(itemToChangeQuantity)));
+  // > shows localstorage item in console
+  var tempProduct = JSON.parse(localStorage.getItem(itemToChangeQuantity));
+  
+  console.log(tempProduct.productquantity);
+  var tempQuantity = Number(val);
+  console.log(tempQuantity);
+
+  tempProduct.productquantity = tempQuantity;
+  console.log(tempProduct);
+  const local = localStorage.setItem(tempProduct.productname + tempProduct.productcolor, JSON.stringify(tempProduct));
+  //location.reload();
 }
