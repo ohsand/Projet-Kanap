@@ -19,7 +19,7 @@ console.log(localStorage);
     productName = parsedproduct.productname;
     TotalCost += parsedproduct.producttotalcost;  
     TotalQuantity += parsedproduct.productquantity;
-    products.push ({productID:productID});
+    products.push (productID);
 
     document.getElementById('cart__items')
             affichage += `<article class="cart__item" data-id="${productTitle}" data-color="{product-color}">
@@ -120,6 +120,7 @@ postForm.addEventListener('click', (e) => {
     let contact = { firstName, lastName, address, city, email };
     //let products = localStorage;
     send(contact, products);
+    console.log(contact);
     console.log(products);
   }
 });
@@ -127,15 +128,19 @@ postForm.addEventListener('click', (e) => {
 function send(contact, products) {
   fetch('http://localhost:3000/api/products/order', {
     method: "POST",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify({
       contact, products
     })
   })  
-  /*  .then(function (res) {
+  .then(function (res) {
       res.json().then(data => {
         console.log(data)
         console.log("orderId", data.orderId)
-        //window.location.href = `confirmation.html?orderId=${data.orderId}`
+        window.location.href = `confirmation.html?orderId=${data.orderId}`
       })
-    })*/
+    })
 }
