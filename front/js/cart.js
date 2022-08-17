@@ -81,6 +81,16 @@ function changeQuantity(event) {
   tempProduct.productquantity = tempQuantity;
   console.log(tempProduct);
   const local = localStorage.setItem(tempProduct.productname + tempProduct.productcolor, JSON.stringify(tempProduct));
+  removeOnZero();
+  function removeOnZero() {
+    if (tempQuantity == 0) {
+      window.localStorage.removeItem(tempProduct.productname + tempProduct.productcolor);
+    }
+    else {
+      console.log('Quantity changed');
+    }
+  };
+    
   //location.reload();
   setTimeout(function(){
     window.location.reload();
