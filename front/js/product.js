@@ -53,13 +53,21 @@ let colors = document.querySelector("#colors");
 colors.addEventListener('change', (event) => {
     console.log(colors.value);
   });
-let quantity = document.querySelector("#quantity");
+var quantity = document.querySelector("#quantity");
 quantity.addEventListener('change', (event) => {
     console.log(quantity.value);
 });
 
+let q = document.getElementById('quantity');
+q.defaultValue = 1;
+
 let submit = document.getElementById('addToCart');
-submit.onclick = () => {
+submit.onclick = () => 
+{
+    if (quantity.value == 0) {
+        alert('Minimum quantity should be 1');
+        return;
+    }
     var basketItem = {
         productname: `${productname}`,
         productid: id,
@@ -67,7 +75,7 @@ submit.onclick = () => {
         productcolor: colors.value,
         productquantity: Number(quantity.value),
         productimage: data[product].imageUrl,
-        producttotalcost: data[product].price * Number(quantity.value),
+        //producttotalcost: data[product].price * Number(quantity.value),
     }
     console.log(basketItem);
 checkStorage()

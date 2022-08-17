@@ -1,8 +1,9 @@
 var TotalCost = 0;
 var TotalQuantity = 0;
+
 var productTitle, parsedproduct, productID, productCost, productImage, productQuantity, productColor, productName = "";
 const products = [];
-
+var newQuantity = "";
 console.log(localStorage);
   
   let affichage = `<article>`
@@ -15,12 +16,12 @@ console.log(localStorage);
     productImage = parsedproduct.productimage;
     productQuantity = parsedproduct.productquantity;
     productColor = parsedproduct.productcolor;
-    productTotalCost = parsedproduct.producttotalcost;
+    //productTotalCost = parsedproduct.producttotalcost;
+    producttotalcost = parsedproduct.productquantity * parsedproduct.productcost;
     productName = parsedproduct.productname;
-    TotalCost += parsedproduct.producttotalcost;  
-    TotalQuantity += parsedproduct.productquantity;
+    //TotalCost += parsedproduct.producttotalcost;  
+    //TotalQuantity += parsedproduct.productquantity;
     products.push (productID);
-
     document.getElementById('cart__items')
             affichage += `<article class="cart__item" data-id="${productTitle}" data-color="{product-color}">
             <div class="cart__item__img">
@@ -34,7 +35,7 @@ console.log(localStorage);
               </div>
               <div class="cart__item__content__settings">
                 <div class="cart__item__content__settings__quantity">
-                  <p>Qté : ${productQuantity}</p>
+                  <p>Qté : ${productQuantity} </p>
                   <input type="number" class="${productTitle}" name="itemQuantity" oninput="changeQuantity(event)" min="1" max="100" value="" placeholder="${productQuantity}">
                 </div>
                 <div class="cart__item__content__settings__delete">
@@ -46,12 +47,28 @@ console.log(localStorage);
             affichage += '</article>';
             document.querySelector("#cart__items").innerHTML = affichage;
         }
-console.log(TotalCost);
+
+//console.log(TotalCost);
+
+for (var entry of Object.entries(localStorage)){
+  console.log(entry);
+  parsedproduct = JSON.parse(entry[1]);
+  productCost = parsedproduct.productcost;
+  productQuantity = parsedproduct.productquantity;
+  var oneItemCost = productCost * productQuantity;
+  TotalCost += oneItemCost;
+};
 
 totalPrice();
 function totalPrice() {
     document.getElementById('totalPrice').innerHTML = TotalCost;
 }
+
+for (var entry of Object.entries(localStorage)){
+  console.log(entry);
+  parsedproduct = JSON.parse(entry[1]);
+  TotalQuantity += parsedproduct.productquantity;
+};
 
 totalQuantity();
 function totalQuantity() {
@@ -66,7 +83,9 @@ function removeItems(event) {
 }
 
 function changeQuantity(event) {
-  console.log(event.target.className);
+  document.getElementsByName("itemQuantity")[0].addEventListener('change', quantityChange());
+  function quantityChange() {
+    console.log(event.target.className);
   let itemToChangeQuantity = event.target.className;
   var val = document.getElementsByClassName(event.target.className)[0].value;
   JSON.parse(localStorage.getItem(itemToChangeQuantity));
@@ -89,15 +108,29 @@ function changeQuantity(event) {
     else {
       console.log('Quantity changed');
     }
-  };
-    
-  //location.reload();
-  setTimeout(function(){
     window.location.reload();
- }, 1000);
+  }};
+
+  /*const quantitySelector = document.getElementById('quantity');
+  quantitySelector.addEventListener('input', function quantityChange() {
+    console.log('new quantity');
+    
+  
+    if (!filter.test(email.value)) {
+    alert('Veuillez saisir une addresse mail valide puis réessayez');
+    email.focus;
+    return false;
+  }
+  });*/
+
+  //location.reload();
+  /*setTimeout(function(){
+    window.location.reload();
+ }, 1000);*/
 }
 
 const button = document.getElementById('order');
+
 
 button.addEventListener('click', function handleClick() {
   console.log('commande');
