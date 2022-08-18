@@ -22,6 +22,8 @@ console.log(localStorage);
     //TotalCost += parsedproduct.producttotalcost;  
     //TotalQuantity += parsedproduct.productquantity;
     products.push (productID);
+    createProductListings();
+    function createProductListings() {
     document.getElementById('cart__items')
             affichage += `<article class="cart__item" data-id="${productTitle}" data-color="{product-color}">
             <div class="cart__item__img">
@@ -46,10 +48,11 @@ console.log(localStorage);
           </article>`;
             affichage += '</article>';
             document.querySelector("#cart__items").innerHTML = affichage;
-        }
+        }};
 
 //console.log(TotalCost);
-
+getTotalPrice();
+function getTotalPrice() {
 for (var entry of Object.entries(localStorage)){
   console.log(entry);
   parsedproduct = JSON.parse(entry[1]);
@@ -57,7 +60,7 @@ for (var entry of Object.entries(localStorage)){
   productQuantity = parsedproduct.productquantity;
   var oneItemCost = productCost * productQuantity;
   TotalCost += oneItemCost;
-};
+}};
 
 totalPrice();
 function totalPrice() {
@@ -83,7 +86,7 @@ function removeItems(event) {
 }
 
 function changeQuantity(event) {
-  document.getElementsByName("itemQuantity")[0].addEventListener('change', quantityChange());
+  document.getElementsByName("itemQuantity")[0].addEventListener('input', quantityChange());
   function quantityChange() {
     console.log(event.target.className);
   let itemToChangeQuantity = event.target.className;
@@ -107,27 +110,14 @@ function changeQuantity(event) {
     }
     else {
       console.log('Quantity changed');
-    }
-    window.location.reload();
+    } 
+    setTimeout(function(){
+      window.location.reload();
+   }, 1000);
+    //window.location.reload();
   }};
-
-  /*const quantitySelector = document.getElementById('quantity');
-  quantitySelector.addEventListener('input', function quantityChange() {
-    console.log('new quantity');
-    
-  
-    if (!filter.test(email.value)) {
-    alert('Veuillez saisir une addresse mail valide puis réessayez');
-    email.focus;
-    return false;
-  }
-  });*/
-
-  //location.reload();
-  /*setTimeout(function(){
-    window.location.reload();
- }, 1000);*/
 }
+
 
 const button = document.getElementById('order');
 
